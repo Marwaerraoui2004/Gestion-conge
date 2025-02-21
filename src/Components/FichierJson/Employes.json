@@ -1,0 +1,4 @@
+[
+    { "id": 1, "nom": "Nouamane labiari", "email": "Nouamanelabiari@gmail.com", "managerId": 1 ,"dateDebut":" 2025-03-01","dateDeFin":" 2025-04-10", "statut":"en Attente" },
+    { "id": 2, "nom": "Lamine yamal","email": "Lamineyamal@gmail.com", "managerId":2,"dateDebut":" 2025-05-01","dateDeFin":" 2025-05-10", "statut":"en Attente"}
+]
