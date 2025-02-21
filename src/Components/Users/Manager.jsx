@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import './Manager.css';
+
 const getColor = (statut) => {
     switch (statut) {
         case "Approuvé":
@@ -17,7 +18,9 @@ const getColor = (statut) => {
 export default function Manager() {
     const conges = useSelector((state) => state.DemandeReducer); 
     const dispatch = useDispatch();
+    
     const [selectedMonth, setSelectedMonth] = useState("");
+    const [adminActif, setAdminActif] = useState(1); // Par défaut, Admin 1 est actif
 
     const modifierStatut = (id, statut) => {
         dispatch({ type: 'MODIFIER_STATUT_CONGE', payload: { id, statut } });
@@ -27,8 +30,7 @@ export default function Manager() {
         if (!month) return conges; 
         return conges.filter((conge) => {
             const congeDate = new Date(conge.dateDebut); 
-            const congeMonth = congeDate.getMonth();
-            return congeMonth === month; 
+            return congeDate.getMonth() === month; 
         });
     };
 
@@ -51,6 +53,14 @@ export default function Manager() {
         <div>
             <h2>Suivi des Congés</h2>
             
+            {/* Sélection de l'admin actif */}
+            <label>Choisir l'admin :</label>
+            <select onChange={(e) => setAdminActif(Number(e.target.value))} value={adminActif}>
+                <option value={1}>Admin 1</option>
+                <option value={2}>Admin 2</option>
+            </select>
+
+            {/* Sélection du mois */}
             <select onChange={(e) => setSelectedMonth(Number(e.target.value))} value={selectedMonth}>
                 <option value="">Tous les mois</option>
                 {months.map((month) => (
@@ -72,15 +82,22 @@ export default function Manager() {
                 </thead>
                 <tbody>
                     {filterCongesByMonth(selectedMonth).map((conge) => (
-                        <tr key={conge.id}>
+                        <tr key={conge.id || Math.random()}>
                             <td>{conge.employeId}</td>
                             <td>{conge.dateDebut}</td>
                             <td>{conge.dateFin}</td>
                             <td style={{ color: getColor(conge.statut) }}>{conge.statut}</td>
                             <td>
-                                <button onClick={() => modifierStatut(conge.id, "Approuvé")}>Accepter</button>
-                                <button onClick={() => modifierStatut(conge.id, "Refusé")}>Refuser</button>
-                                <button onClick={() => modifierStatut(conge.id, "Reporté")}>Reporter</button>
+                                {/* Désactiver les boutons si l'admin actif ≠ managerId */}
+                                {conge.managerId === adminActif ? (
+                                    <>
+                                        <button onClick={() => modifierStatut(conge.id, "Approuvé")}>Accepter</button>
+                                        <button onClick={() => modifierStatut(conge.id, "Refusé")}>Refuser</button>
+                                        <button onClick={() => modifierStatut(conge.id, "Reporté")}>Reporter</button>
+                                    </>
+                                ) : (
+                                    <span>Vous ne pouvez pas modifier cette demande</span>
+                                )}
                             </td>
                         </tr>
                     ))}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css"; // Importe le fichier CSS
+import "./Login.css"; 
 
 export default function Login() {
     const [role, setRole] = useState("");
@@ -44,6 +44,7 @@ export default function Login() {
                         />
                         Manager
                     </label>
+                    
                     <label>
                         <input
                             type="radio"
