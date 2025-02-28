@@ -1,4 +1,4 @@
 [
-    { "id": 1, "nom": "Marwa Erraoui" },
-    { "id": 2, "nom": "Mouna Masbahi" }
+    { "id": 1, "nom": "marwa erraoui" ,"email":"marwa@gmail.com"},
+    { "id": 2, "nom": "mouna masbahi" ,"email":"mouna@gmail.com"}
   ]

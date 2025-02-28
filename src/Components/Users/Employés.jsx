@@ -17,8 +17,9 @@ const getColor = (statut) => {
 
 const Employes = ({ employeId }) => {
   const [dateDebut, setDateDebut] = useState("");
+  const [nom,setNom]=useState("");
   const [dateFin, setDateFin] = useState("");
-  const [managerId, setManagerId] = useState(1); // Par défaut, Admin 1
+  const [managerId, setManagerId] = useState(1); 
   const dispatch = useDispatch();
 
   const conges = useSelector((state) => state.DemandeReducer);
@@ -31,7 +32,8 @@ const Employes = ({ employeId }) => {
     const nouvelleDemande = {
       id: Date.now(),
       employeId,  
-      managerId, // On prend l'admin choisi
+      nom,
+      managerId,
       dateDebut,
       dateFin,
       statut: "En attente"
@@ -50,7 +52,6 @@ const Employes = ({ employeId }) => {
     <div className="employe-container">
       <h3>Nouvelle Demande de Congé</h3>
       
-      {/* Sélection de l'admin responsable */}
       <label>Choisir un admin responsable :</label>
       <select onChange={(e) => setManagerId(Number(e.target.value))} value={managerId}>
         <option value={1}>Admin 1</option>
@@ -75,6 +76,7 @@ const Employes = ({ employeId }) => {
           <thead>
             <tr>
               <th>Admin Responsable</th>
+              <th>Nom d'employe</th>
               <th>Date Début</th>
               <th>Date Fin</th>
               <th>Statut</th>
@@ -85,6 +87,7 @@ const Employes = ({ employeId }) => {
               demandesEmploye.map((demande) => (
                 <tr key={demande.id}>
                   <td>Admin {demande.managerId}</td>
+                  <td>Admin {demande.nom}</td>
                   <td>{demande.dateDebut}</td>
                   <td>{demande.dateFin}</td>
                   <td style={{ color: getColor(demande.statut) }}>{demande.statut}</td>

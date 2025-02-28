@@ -20,7 +20,7 @@ export default function Manager() {
     const dispatch = useDispatch();
     
     const [selectedMonth, setSelectedMonth] = useState("");
-    const [adminActif, setAdminActif] = useState(1); // Par défaut, Admin 1 est actif
+    const [adminActif, setAdminActif] = useState(1);
 
     const modifierStatut = (id, statut) => {
         dispatch({ type: 'MODIFIER_STATUT_CONGE', payload: { id, statut } });
@@ -83,12 +83,11 @@ export default function Manager() {
                 <tbody>
                     {filterCongesByMonth(selectedMonth).map((conge) => (
                         <tr key={conge.id || Math.random()}>
-                            <td>{conge.employeId}</td>
+                            <td>{conge.nom}</td>
                             <td>{conge.dateDebut}</td>
                             <td>{conge.dateFin}</td>
                             <td style={{ color: getColor(conge.statut) }}>{conge.statut}</td>
                             <td>
-                                {/* Désactiver les boutons si l'admin actif ≠ managerId */}
                                 {conge.managerId === adminActif ? (
                                     <>
                                         <button onClick={() => modifierStatut(conge.id, "Approuvé")}>Accepter</button>
